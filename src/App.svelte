@@ -1,6 +1,4 @@
 <script>
-	let dogs = [];
-
 	import DogForm from "./DogForm.svelte";
 
 	let savedDog = null;
