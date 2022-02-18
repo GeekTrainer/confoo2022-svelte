@@ -26,4 +26,3 @@
 
 	<DogForm on:new-dog={saveDog} />
 </main>
-
