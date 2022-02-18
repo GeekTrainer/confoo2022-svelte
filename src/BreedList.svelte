@@ -1,30 +1,27 @@
 <script>
-    let breeds = [];
-    async function loadBreeds() {
-        const response = await fetch("http://localhost:3000/api/breeds");
-        const json = await response.json();
-        breeds = json;
-    }
+    export let filterStatus = false;
+    export let message = '';
 
-    import { selectedBreeds } from "./store.js";
+    import { breeds } from "./store.js";
 
-    $: displayBreeds = breeds
-        .filter((breed) => !$selectedBreeds.find((b) => b.name === breed.name))
+    $: displayBreeds = $breeds
+        .filter((b) => b.selected === filterStatus)
         .sort((lhs, rhs) => lhs.name < rhs.name);
 
-    function selectBreed(breed) {
-        $selectedBreeds = [...$selectedBreeds, breed];
+    function toggleSelection(breed) {
+        breed.selected = !breed.selected;
+        $breeds = [...$breeds]
     }
 </script>
 
 <ul class="list-group">
-    {#await loadBreeds()}
-        <li class="list-group-item">Loading breed list...</li>
-    {:then}
-        {#each displayBreeds as breed (breed.name)}
-            <button class="list-group-item" on:click={() => selectBreed(breed)}>{breed.name}</button>
-        {:else}
-            <li class="list-group-item">No more breeds found</li>
-        {/each}
-    {/await}
+    {#each displayBreeds as breed (breed.name)}
+        <button
+            class="list-group-item"
+            on:click={() => toggleSelection(breed)}
+            >{breed.name}</button
+        >
+    {:else}
+        <li class="list-group-item">{message}</li>
+    {/each}
 </ul>
