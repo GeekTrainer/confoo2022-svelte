@@ -4,7 +4,6 @@
 	let savedDog = null;
 
 	function saveDog(event) {
-		console.log(event);
 		savedDog = {
 			name: event.detail.name,
 			breeds: event.detail.breeds.map(b => b.name).join(', ')
