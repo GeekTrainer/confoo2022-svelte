@@ -7,7 +7,10 @@ const collection = 'breeds';
 // The current database to use.
 use(database);
 
-Create a new collection.
+// Create a new collection.
+db.createCollection(collection);
+
+// Create breeds
 db.breeds.insertMany(
   [
     {name: 'Poodle'},
